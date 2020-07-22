@@ -1,0 +1,69 @@
+{%load static%}
+{% static 'media' as md %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QR generate app </title>
+    <link rel="stylesheet" type="text/css" href="{%static 'css/Home.css'%}">
+</head>
+
+<body>
+<div class="title" > <h1> QR code Application </h1></div>
+  <div class="container">
+     <form action="/generate" method="get">
+       <div class="left" align='center'>
+            <h3> Choose data for QR </h3>
+
+
+                   <select name="station_data" class="select-box">
+                         {% for data in equipments %}
+                      <option value="{{data.station_name}}">{{data.station_name}}  </option>
+                         {%endfor%}
+                   </select>
+
+                   <br>
+
+                   <select name="type" class="select-box">
+                        {% for data in equipments %}
+                   <option value="{{data.equipment_name}}"> {{data.equipment_name}}</option>
+                        {%endfor%}
+                   </select>
+
+                   <br>
+
+                   <select name="equipment" class="select-box">
+                        {% for data in equipments %}
+                   <option value="{{data.equipment_type}}"> {{data.equipment_type}}</option>
+                            {%endfor%}
+                   </select>
+
+                    <br>
+
+                   <select name="model_number" class="select-box">
+                        {% for data in equipments %}
+                   <option value="{{data.model_number}}">{{data.model_number}} </option>
+                        {%endfor%}
+                   </select>
+                       {%csrf_token%}
+                 <br>
+
+                   <input type="submit" value="generate" class="submitbtn">
+
+       </div>
+     </form>
+     <div class="right">
+         <h3> Your QR code - </h3>
+         {% if equipment %}
+            <img src="{{md}}/{{image_name}}.png" style="align-items: center;">
+         {%endif%}
+         <br><br>
+
+
+         <a href="{{md}}/{{image_name}}.png" download="Download"> Download </a>
+
+
+     </div>
+  </div>
+
+</body>
